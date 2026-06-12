@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Servicio del Backend
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./server/.env # Asegura que tus variables de Supabase se pasen al contenedor
+
+  # Servicio del Frontend
+  client:
+    build: ./client
+    ports:
+      - "80:80" # Tu app correrá en http://localhost
+    depends_on:
+      - server # Le dice a Docker que levante el servidor primero
+    env_file:
+      - ./client/.env
